@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from torchvision import models, transforms
+import torch.nn.functional as F
 from PIL import Image
 import argparse
 import os
@@ -31,14 +32,16 @@ def predict_image(image_path):
     image_tensor = transform(image).unsqueeze(0).to(DEVICE)
     model = load_model()
     with torch.no_grad():
-        outputs = model(image_tensor)
-        _, pred = torch.max(outputs, 1)
-        predicted_class = CLASS_NAMES[pred.item()]
-        return predicted_class
+        logits = model(image_tensor)                          
+        probs = F.softmax(logits, dim=1)[0]           
+        conf, idx = probs.max(0)                     
+        predicted_class = CLASS_NAMES[idx.item()]
+
+    return predicted_class, conf.item()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run inference on a single image.")
     parser.add_argument("--image-path", type=str, required=True, help="Path to input image")
     args = parser.parse_args()
-    prediction = predict_image(args.image_path)
-    print(f"✅ Predicted class: {prediction}")
+    prediction, confidence_score = predict_image(args.image_path)
+    print(f"✅ Predicted class: {prediction}, Confidence Score: {confidence_score}")
