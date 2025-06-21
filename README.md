@@ -191,3 +191,10 @@ After training, the model was evaluated on the test set with the following resul
 | `test_images/photo-1546519638-68e109498ffc.jpg`     | `none`    | 0.94       |
 
 ---
+
+## Contact
+
+- **Name**: Amber Goswami
+- **Email**: ambergoswami9@gmil.com
+
+---
