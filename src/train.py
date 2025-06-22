@@ -111,7 +111,7 @@ class PhoneClassifierTrainer:
         print(f"Starting training on {self.DEVICE}")
 
         for epoch in range(self.EPOCHS):
-            # ————————— Perform training as before —————————
+            # ————————— Perform training —————————
             self.model.train()
             total_train_loss = 0.0
             for inputs, labels in self.train_loader:
@@ -125,7 +125,7 @@ class PhoneClassifierTrainer:
             avg_train_loss = total_train_loss / len(self.train_loader)
             train_losses.append(avg_train_loss)
 
-            # ————————— Perform validation as before —————————
+            # ————————— Perform validation —————————
             self.model.eval()
             total_val_loss = 0.0
             correct = total = 0
